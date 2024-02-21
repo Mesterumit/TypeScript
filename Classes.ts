@@ -227,6 +227,74 @@ class Circle {
         return this.pi * radius * radius
     }
 }
-
+// static method can be called without instantiating the class
 Circle.pi; // returns 3.14
 Circle.calcArea(5) // returns 78.5
+
+class car {
+    make : string;
+    model : string;
+    constructor(make:string , model:string){
+        this.make = make;
+        this.model = model;
+    }
+    static createCar(make:string, model:string){
+        return new car(make,model)
+    }
+}
+
+const myCar = car.createCar('Toyota','Rav4');
+// we can also create a new car
+const myCar2 = new car('Toyota','Camry')
+
+// INTERFACES
+
+// iterface is structure that defines the "contact".
+// It defines the syntax for classes to follow.
+// Class must follow the derived interface structure.
+
+// the TS compiler doesn't convert interface to JS.
+// just for type checking. "duck typing" or "structural subtyping"
+
+// an interface is defined with the keyword interface
+// it can only include properties and method declarations
+
+// No implementation
+
+interface Calendar{
+    events : string[];
+    addEvent(event:string) : void;
+}
+
+class LmsCalendar implements Calendar{
+    events : string [];
+    constructor(){
+        this.events =[];
+    }
+    addEvent(event: string): void {
+        this.events.push(event)
+    }
+}
+
+interface IEmployee{
+
+    empSalary : number;
+    empName : string;
+    getSalary(salary:number) : number;
+    getName(empName:number) : string;
+}
+
+class IEmployee1 implements IEmployee{
+    empSalary: number;
+    empName: string;
+    constructor(code: number, name: string){
+        this.empName = name;
+        this.empSalary = code;
+    }
+    getSalary(salary: number): number {
+        return 200000;
+    }
+    getName(empName: number): string {
+        return 'Umit'
+    }
+}
