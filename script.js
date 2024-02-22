@@ -55,3 +55,19 @@ var Color;
 })(Color || (Color = {}));
 let selectedColor = Color.Green;
 console.log(selectedColor); // output: 1
+const typeAliasFunction = (arg) => {
+    return arg;
+};
+console.log("---------TYPE AlIAS-----------");
+console.log(typeAliasFunction('Hello'));
+console.log(typeAliasFunction(20));
+// so i can't add another variable inside of it, such as location' 
+// because i have only two "variables , name and age"
+const David = {
+    name: 'Umit',
+    age: 31,
+    // location: 'Boston'
+};
+let pet1 = 'cat';
+let pet2 = 'dog';
+// let umit : pet = 'gerbil' // error

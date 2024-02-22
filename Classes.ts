@@ -246,7 +246,10 @@ class car {
 const myCar = car.createCar('Toyota','Rav4');
 // we can also create a new car
 const myCar2 = new car('Toyota','Camry')
+console.log(myCar2)
 
+
+console.log("====iNTERFACE=======")
 // INTERFACES
 
 // iterface is structure that defines the "contact".
@@ -268,33 +271,158 @@ interface Calendar{
 
 class LmsCalendar implements Calendar{
     events : string [];
-    constructor(){
-        this.events =[];
+    constructor(event:string[]){
+        this.events =event;
     }
     addEvent(event: string): void {
         this.events.push(event)
     }
 }
-
+const e2 = new LmsCalendar(['Umit'])
+console.log(e2)
+console.log("====iNTERFACE Employee=======")
 interface IEmployee{
 
     empSalary : number;
     empName : string;
-    getSalary(salary:number) : number;
-    getName(empName:number) : string;
+    setSalary(salary:number) : void;
+    getName(empName:string) : string;
 }
 
 class IEmployee1 implements IEmployee{
     empSalary: number;
     empName: string;
-    constructor(code: number, name: string){
+    emCity : string;
+    constructor(code: number, name: string, city: string){
         this.empName = name;
         this.empSalary = code;
+        this.emCity = city
     }
-    getSalary(salary: number): number {
-        return 200000;
+    setSalary(salary: number): void {
+        this.empSalary = salary;
+        console.log('Salary changed to : ' + this.empSalary)
     }
-    getName(empName: number): string {
-        return 'Umit'
+    getSalary(empSalary:number):number{
+        return this.empSalary;
+    }
+    getName(empName: string): string {
+        return empName
+    }
+    // this is a method that is not defined in the interface
+    // we can add things to classes that imlement interfaces,
+    // but we can't add things to interfaces that we aren't including in our classes 
+   getCity(emCity: string):string{
+    return emCity
+   }
+}
+
+const dude = new IEmployee1(1,"Umit",'Boston')
+dude.setSalary(20)
+console.log(dude)
+
+// INTERFACES VS TYPE ALIASES
+
+// interfaces and type aliases can be used interchangeably.
+// Both can be used to describe the shape of an object
+
+// Interface can only be used for object and classses
+
+
+// type aliases
+type Person3 ={
+    name: string;
+}
+let umit: Person3={
+    name:'Umit'
+}
+
+interface Point {
+    x: number;
+}
+
+interface Point {
+    y: number;
+}
+
+let point: Point = {
+    x:1,
+    y:2
+}
+
+console.log(point)
+
+// tring this with type:
+// if i try to use "Point1" and add onather variable 
+// it is not gonna wotk, it will say duplicate identifier
+
+type Point1 ={
+    x:number
+}
+type Point2 ={
+    y:number
+}
+type Point1_2 = Point1 & Point2
+// type Point1_2{x:number, y:number}
+
+// INTERfaces can only cotain declaration of properties and methods
+// no value or no implementtaion details are allowed
+
+// A class can implement more than one interface,
+// but can only implement one super class
+
+interface Color2{
+    color :{
+        r:number,
+        g:number,
+        b:number
     }
 }
+
+interface Shape {
+    area : number;
+}
+
+class ParentClass{
+    name:string;
+    constructor(name:string){
+        this.name = name
+    }
+}
+// extending a parent class and implementing multiple interfaces
+class Square extends ParentClass implements Color2,Shape {
+    color :{r:number, g:number, b:number}
+    area : number;
+    constructor(
+        c:{r:number, g:number, b:number},
+        a:number,
+        name:string  )
+        {
+            super(name)
+            this.color = c;
+            this.area = a;
+        }
+}
+
+// INTERFACES AS FUNCTION TYPE
+
+// we can define function type using interface ,
+//  to assign a function a variable , 
+// TS can enforce specific function
+
+console.log("=======INTERFACE AS FUNCTION TYPE=====")
+interface NumKey{
+    (key: number, value:string) : void
+}
+
+function addKeyVal(k:number, v:string) : void{
+    console.log("Adding key value ", k, v)
+}
+
+function update(index: number, newVal:string) : void{
+    console.log("updating key value", index, newVal)
+}
+
+let kvp : NumKey = addKeyVal;
+kvp(1,"Umit")
+kvp = update
+kvp(2,"Mester")

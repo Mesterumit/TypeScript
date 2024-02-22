@@ -1,35 +1,20 @@
+"use strict";
 // class can include the following 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 // constructor 
 // properties
 // methods
 // an object of the class can be created using the new keyword
 // while instanting a new object the class constructor is called with the valus passed
-var Employee = /** @class */ (function () {
-    function Employee(code, name) {
+class Employee {
+    constructor(code, name) {
         this.empCode = code;
         this.empName = name;
     }
-    Employee.prototype.print = function () {
+    print() {
         console.log(this.empCode, this.empName);
-    };
-    return Employee;
-}());
-var emp = new Employee(100, 'Jhon');
+    }
+}
+let emp = new Employee(100, 'Jhon');
 emp.print();
 console.log(emp);
 // functionalities are passed down to classes
@@ -41,24 +26,20 @@ console.log(emp);
 // and intialises its own properties
 // we must call "super()" method first before assigning values to properties in the
 // constructor of child class
-var Person = /** @class */ (function () {
-    function Person(name) {
+class Person {
+    constructor(name) {
         this.name = name;
     }
-    return Person;
-}());
-var Employee2 = /** @class */ (function (_super) {
-    __extends(Employee2, _super);
-    function Employee2(code, name) {
-        var _this = _super.call(this, name) || this;
-        _this.empCode = code;
-        return _this;
+}
+class Employee2 extends Person {
+    constructor(code, name) {
+        super(name);
+        this.empCode = code;
     }
-    Employee2.prototype.displayName = function () {
+    displayName() {
         console.log(this.name, this.empCode);
-    };
-    return Employee2;
-}(Person));
+    }
+}
 //Abstract Classes
 // ts allows us to define an abstract class using keyword "abstract"
 // abstract classes are mainly for defining structure of class, where there are no
@@ -75,29 +56,25 @@ var Employee2 = /** @class */ (function (_super) {
 // the employee class should implement all the abstract methods of the Person class, 
 // otherwise the compiler will give an error
 console.log("=======ABSTRACT====");
-var Person2 = /** @class */ (function () {
-    function Person2(name) {
+class Person2 {
+    constructor(name) {
         this.name = name;
     }
-    Person2.prototype.displayName = function () {
+    displayName() {
         console.log(this.name);
-    };
-    return Person2;
-}());
-var Employee3 = /** @class */ (function (_super) {
-    __extends(Employee3, _super);
-    function Employee3(code, name) {
-        var _this = _super.call(this, name) || this;
-        _this.empCode = code;
-        return _this;
+    }
+}
+class Employee3 extends Person2 {
+    constructor(code, name) {
+        super(name);
+        this.empCode = code;
     }
     // i have to have "displayCode()" method from parent abstract method
-    Employee3.prototype.displayCode = function () {
+    displayCode() {
         console.log(this.empCode);
-    };
-    return Employee3;
-}(Person2));
-var e = new Employee3(20, 'Umit');
+    }
+}
+const e = new Employee3(20, 'Umit');
 e.displayName();
 // Class Data Modifiers
 // in object-oriented programing , the concept of "encapsulation" is used
@@ -113,14 +90,13 @@ e.displayName();
 // to that class and are not accessible outside the containing class
 // when we create an object "emp" and try to access the "emp.empCode" member
 // it will give an error
-var Employee4 = /** @class */ (function () {
-    function Employee4(empCode, name) {
+class Employee4 {
+    constructor(empCode, name) {
         this.empCode = empCode;
         this.empName = name;
     }
-    return Employee4;
-}());
-var em = new Employee4(100, 'Faruk');
+}
+let em = new Employee4(100, 'Faruk');
 // console.log(em.empCode) // compiler error because it is private
 //PROTECTED MODIFIER
 // child class can't access "private" methods/properties
@@ -131,27 +107,136 @@ var em = new Employee4(100, 'Faruk');
 // outside the class, we can recah "empName"
 // but we can't reach "department"
 console.log("=======Protected======");
-var Employee5 = /** @class */ (function () {
-    function Employee5(empCode, name) {
+class Employee5 {
+    constructor(empCode, name) {
         this.id = Math.random();
         this.empCode = empCode;
         this.empName = name;
     }
-    Employee5.prototype.getEmpin = function () {
+    getEmpin() {
         return this.id;
-    };
-    return Employee5;
-}());
-var DevelopmentEmployee = /** @class */ (function (_super) {
-    __extends(DevelopmentEmployee, _super);
-    function DevelopmentEmployee(code, name, dep) {
-        var _this = _super.call(this, code, name) || this;
-        _this.department = dep;
-        return _this;
+    }
+}
+class DevelopmentEmployee extends Employee5 {
+    constructor(code, name, dep) {
+        super(code, name);
+        this.department = dep;
         // this.id = 100 // Compiler Error. Private tp parent
     }
-    return DevelopmentEmployee;
-}(Employee5));
-var emp2 = new DevelopmentEmployee(100, "Jhon", "Backend");
+}
+let emp2 = new DevelopmentEmployee(100, "Jhon", "Backend");
 // console.log(emp2.department) // compiler error 
 console.log(emp2.getEmpin());
+// REadonly Modifier
+// in adition to the access modifiers, typescript provider two more keywords: read-nly and static
+// Prefix read-only is used to amek a property as read only
+class Employee6 {
+    constructor(empCode, name) {
+        this.empCode = empCode;
+        this.empName = name;
+    }
+}
+let emp3 = new Employee6(100, 'Umit');
+// emp3.empCode = 20 // Compiler error
+// STATIC MODIFIER
+// static members of a class are accessed using the class name
+// and dt nottaion, without creating an object
+// static members can be defined by using the keyword static
+// circle class includes a static property and a static method
+// we can call these methods and properties directly from the class
+class Circle {
+    static calcArea(radius) {
+        return this.pi * radius * radius;
+    }
+}
+Circle.pi = 3.14;
+// static method can be called without instantiating the class
+Circle.pi; // returns 3.14
+Circle.calcArea(5); // returns 78.5
+class car {
+    constructor(make, model) {
+        this.make = make;
+        this.model = model;
+    }
+    static createCar(make, model) {
+        return new car(make, model);
+    }
+}
+const myCar = car.createCar('Toyota', 'Rav4');
+// we can also create a new car
+const myCar2 = new car('Toyota', 'Camry');
+console.log(myCar2);
+console.log("====iNTERFACE=======");
+class LmsCalendar {
+    constructor(event) {
+        this.events = event;
+    }
+    addEvent(event) {
+        this.events.push(event);
+    }
+}
+const e2 = new LmsCalendar(['Umit']);
+console.log(e2);
+console.log("====iNTERFACE Employee=======");
+class IEmployee1 {
+    constructor(code, name, city) {
+        this.empName = name;
+        this.empSalary = code;
+        this.emCity = city;
+    }
+    setSalary(salary) {
+        this.empSalary = salary;
+        console.log('Salary changed to : ' + this.empSalary);
+    }
+    getSalary(empSalary) {
+        return this.empSalary;
+    }
+    getName(empName) {
+        return empName;
+    }
+    // this is a method that is not defined in the interface
+    // we can add things to classes that imlement interfaces,
+    // but we can't add things to interfaces that we aren't including in our classes 
+    getCity(emCity) {
+        return emCity;
+    }
+}
+const dude = new IEmployee1(1, "Umit", 'Boston');
+dude.setSalary(20);
+console.log(dude);
+let umit = {
+    name: 'Umit'
+};
+let point = {
+    x: 1,
+    y: 2
+};
+console.log(point);
+class ParentClass {
+    constructor(name) {
+        this.name = name;
+    }
+}
+// extending a parent class and implementing multiple interfaces
+class Square extends ParentClass {
+    constructor(c, a, name) {
+        super(name);
+        this.color = c;
+        this.area = a;
+    }
+}
+// INTERFACES AS FUNCTION TYPE
+// we can define function type using interface ,
+//  to assign a function a variable , 
+// TS can enforce specific function
+console.log("=======INTERFACE AS FUNCTION TYPE=====");
+function addKeyVal(k, v) {
+    console.log("Adding key value ", k, v);
+}
+function update(index, newVal) {
+    console.log("updating key value", index, newVal);
+}
+let kvp = addKeyVal;
+kvp(1, "Umit");
+kvp = update;
+kvp(2, "Mester");
